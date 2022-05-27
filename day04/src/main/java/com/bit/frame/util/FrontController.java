@@ -1,6 +1,7 @@
 package com.bit.frame.util;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -24,12 +25,21 @@ public class FrontController extends HttpServlet {
 		prefix = "/WEB-INF/views/";
 		suffix = ".jsp";
 		
-		// 나중에 이 부분만 밖으로 뺄 수 있다면 어디서든 사용할 수 있음
+		
 		Map<String, String> mapping = new HashMap<>();
-		mapping.put("/index.bit", "com.bit.frame.controller.IndexController");
-		mapping.put("/list.bit", "com.bit.frame.controller.ListController");
-		mapping.put("/login.bit", "com.bit.frame.controller.LoginController");
-		mapping.put("/add.bit", "com.bit.frame.controller.AddController");
+		
+		// 나중에 이 부분만 밖으로 뺄 수 있다면 어디서든 사용할 수 있음 -> 아래 코드처럼
+//		mapping.put("/index.bit", "com.bit.frame.controller.IndexController");
+//		mapping.put("/list.bit", "com.bit.frame.controller.ListController");
+//		mapping.put("/login.bit", "com.bit.frame.controller.LoginController");
+//		mapping.put("/add.bit", "com.bit.frame.controller.AddController");
+		
+		// 파라미터로 받아오면 됨
+		Enumeration<String> names = getInitParameterNames();
+		while(names.hasMoreElements()) {
+			String url = names.nextElement();
+			mapping.put(url, getInitParameter(url));
+		}
 		
 		Set<String> keys = mapping.keySet();
 		try {
