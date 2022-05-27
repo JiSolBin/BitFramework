@@ -23,6 +23,6 @@ public class ListController implements MyController {
 			e.printStackTrace();
 		}
 		
-		return "list";
+		return "emp/list";
 	}
 }

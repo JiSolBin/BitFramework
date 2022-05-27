@@ -15,7 +15,7 @@ public class AddController implements MyController {
 
 	protected String doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		return "add";
+		return "emp/add";
 	}
 	
 	protected String doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
