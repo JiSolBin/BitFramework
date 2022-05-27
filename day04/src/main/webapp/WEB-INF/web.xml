@@ -13,28 +13,10 @@
    
    <servlet>
    	<servlet-name>index</servlet-name>
-   	<servlet-class>com.bit.frame.controller.IndexController</servlet-class>
+   	<servlet-class>com.bit.frame.util.FrontController</servlet-class>
    </servlet>
    <servlet-mapping>
    	<servlet-name>index</servlet-name>
-   	<url-pattern>/index.bit</url-pattern>
-   </servlet-mapping>
-   
-   <servlet>
-   	<servlet-name>list</servlet-name>
-   	<servlet-class>com.bit.frame.controller.ListController</servlet-class>
-   </servlet>
-   <servlet-mapping>
-   	<servlet-name>list</servlet-name>
-   	<url-pattern>/list.bit</url-pattern>
-   </servlet-mapping>
-   
-   <servlet>
-   	<servlet-name>add</servlet-name>
-   	<servlet-class>com.bit.frame.controller.AddController</servlet-class>
-   </servlet>
-   <servlet-mapping>
-   	<servlet-name>add</servlet-name>
-   	<url-pattern>/add.bit</url-pattern>
+   	<url-pattern>*.bit</url-pattern>
    </servlet-mapping>
 </web-app>
