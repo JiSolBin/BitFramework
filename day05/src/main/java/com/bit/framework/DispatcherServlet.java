@@ -1,65 +1,41 @@
 package com.bit.framework;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Properties;
-import java.util.Set;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.omg.CORBA.portable.InputStream;
-
-import com.bit.emp.controller.IndexController;
-import com.bit.emp.controller.ListController;
-
 public class DispatcherServlet extends HttpServlet {
-	
-	// url에 맞춰서 controller 찾아갈 수 있도록
-	Map<String, BitController> cmap = new HashMap<>();
-	
+
+	private SimpleViewResolver resolver;
+	private SimpleHandlerMapping handler;
+
 	@Override
 	public void init() throws ServletException {
 		
-		Map<String, String> handler = new HashMap<>();
-		
-		File file = new File(getServletContext().getRealPath("./")+"WEB-INF\\classes\\mapping.properties");
+		String bit = getInitParameter("bit");
+		if(bit==null) bit="/WEB-INF/bit.properties";
 		Properties prop = new Properties();
-		FileInputStream is = null;
 		try {
-			is = new FileInputStream(file);
-			prop.load(is);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} finally {
-			try {
-				if(is!=null) is.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		Enumeration eles = prop.keys();
-		while(eles.hasMoreElements()) {
-			String key = (String)eles.nextElement();
-			handler.put(key, prop.getProperty(key));
-		}
-		
-		Set<String> keys = handler.keySet();
-		try {
-			for(String key:keys)
-				cmap.put(key, (BitController)(Class.forName(handler.get(key)).newInstance()));
+			prop.load(new FileInputStream(getServletContext().getRealPath(bit)));
+
+			SimpleHandlerMapping handler = (SimpleHandlerMapping) Class.forName(prop.getProperty("handlerMapping")).newInstance();
+			handler.setPath(getServletContext().getRealPath("./") + "WEB-INF\\classes\\mapping.properties");
+			this.handler = handler;
+
+			SimpleViewResolver resolver = (SimpleViewResolver) Class.forName(prop.getProperty("viewResolver")).newInstance();
+			resolver.setPrefix("/WEB-INF/views/");
+			resolver.setSuffix(".jsp");
+			this.resolver = resolver;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -83,12 +59,10 @@ public class DispatcherServlet extends HttpServlet {
 	
 	protected void doDo(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		System.out.println("dispatcher start..");
-		
 		String url = req.getRequestURI().substring(req.getContextPath().length());
 		
 		BitController controller = null;
-		controller = cmap.get(url);
+		controller = handler.getMapping().get(url);
 		
 		String viewName = "";
 		try {
@@ -97,9 +71,6 @@ public class DispatcherServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		SimpleViewResolver resolver = new SimpleViewResolver();
-		resolver.setPrefix("/WEB-INF/views/");
-		resolver.setSuffix(".jsp");
 		resolver.viewResolver(viewName, req, resp);
 	}
 }
