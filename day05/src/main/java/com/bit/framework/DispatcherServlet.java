@@ -1,14 +1,23 @@
 package com.bit.framework;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.omg.CORBA.portable.InputStream;
 
 import com.bit.emp.controller.IndexController;
 import com.bit.emp.controller.ListController;
@@ -21,8 +30,43 @@ public class DispatcherServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		
-		cmap.put("/index.bit", new IndexController());
-		cmap.put("/emp/index.bit", new ListController());
+		Map<String, String> handler = new HashMap<>();
+		
+		File file = new File(getServletContext().getRealPath("./")+"WEB-INF\\classes\\mapping.properties");
+		Properties prop = new Properties();
+		FileInputStream is = null;
+		try {
+			is = new FileInputStream(file);
+			prop.load(is);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} finally {
+			try {
+				if(is!=null) is.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		Enumeration eles = prop.keys();
+		while(eles.hasMoreElements()) {
+			String key = (String)eles.nextElement();
+			handler.put(key, prop.getProperty(key));
+		}
+		
+		Set<String> keys = handler.keySet();
+		try {
+			for(String key:keys)
+				cmap.put(key, (BitController)(Class.forName(handler.get(key)).newInstance()));
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
