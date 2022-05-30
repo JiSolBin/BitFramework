@@ -1,19 +1,24 @@
 package com.bit.emp.model;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.sql.DataSource;
 
 import com.bit.framework.JdbcTemplate;
 import com.bit.framework.RowMapper;
-import com.mysql.cj.jdbc.MysqlConnectionPoolDataSource;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
 public class EmpDao {
 	
-	DataSource dataSource;
+	JdbcTemplate<EmpVo> template = new JdbcTemplate<EmpVo>();
+	RowMapper<EmpVo> mapper = new RowMapper<EmpVo>() {
+		
+		@Override
+		public EmpVo rows(ResultSet rs) throws SQLException {
+			return new EmpVo(
+					rs.getInt("empno"), rs.getInt("sal"), rs.getString("ename"), rs.getString("job")
+					);
+		}
+	};
 	
 	public EmpDao() {
 		
@@ -25,29 +30,33 @@ public class EmpDao {
 		dataSource.setUrl(url);
 		dataSource.setUser(user);
 		dataSource.setPassword(password);
-		this.dataSource = dataSource;
+		template.setDataSource(dataSource);
 	}
 	
 	public List<EmpVo> selectAll() throws SQLException {
-		
 		String sql = "select * from emp";
-		JdbcTemplate template = new JdbcTemplate(dataSource);
-		RowMapper rowMapper = new RowMapper() {
-			@Override
-			public Object rows(ResultSet rs) throws SQLException {
-				return new EmpVo(rs.getInt("empno"), rs.getInt("sal"), rs.getString("ename"), rs.getString("job"));
-			}
-		};
-		return template.queryForList(sql, rowMapper, new Object[]{});
+		return template.queryForList(sql, mapper);
 	}
 	
-	 public void insertOne(EmpVo bean) throws SQLException {
-		 
+	public EmpVo selectOne(int num) throws SQLException {
+		String sql = "select * from emp where empno=?";
+		return template.queryForObject(sql, mapper, num);
+	}
+	
+	public int updateOne(EmpVo bean) throws SQLException {
+		String sql = "update emp set ename=?, sal=?, job=? where empno=?";
+		return template.executeUpdate(sql, bean.getEname(), bean.getSal(), bean.getJob(), bean.getEmpno());
+	}
+	
+	public void insertOne(EmpVo bean) throws SQLException {
 		 String sql="insert into emp(empno, ename, sal, job) values(?,?,?,?)";
-		 JdbcTemplate template = new JdbcTemplate();
-		 template.setDataSource(dataSource);
 		 Object[] objs = new Object[] {bean.getEmpno(), bean.getEname(), bean.getSal(), bean.getJob()};
 		 template.executeUpdate(sql, objs);
+	}
+	
+	public void deleteOne(int num) throws SQLException {
+		String sql = "delete from emp where empno=?";
+		template.executeUpdate(sql, num);
 	}
 	
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-public class JdbcTemplate {
+public class JdbcTemplate<T> {
 
 	private Connection conn;
 	private PreparedStatement pstmt;
@@ -23,7 +23,7 @@ public class JdbcTemplate {
 		this.dataSource = dataSource;
 	}
 
-	public int executeUpdate(String sql, Object[] objs) throws SQLException {
+	public int executeUpdate(String sql, Object... objs) throws SQLException {
 
 		 try{
 			conn = dataSource.getConnection();
@@ -43,9 +43,17 @@ public class JdbcTemplate {
 		if(conn!=null) conn.close();
 	}
 	
-	public List queryForList(String sql, RowMapper mapper, Object[] objs) throws SQLException {
+	public T queryForObject(String sql, RowMapper<T> mapper, Object... objs) throws SQLException {
+		return queryForList(sql, mapper, objs).get(0);
+	}
+	
+	public List<T> queryForList(String sql, RowMapper<T> mapper) throws SQLException {
+		return queryForList(sql, mapper, new Object[] {});
+	}
+	
+	public List<T> queryForList(String sql, RowMapper<T> mapper, Object... objs) throws SQLException {
 		
-		List list = new ArrayList();
+		List<T> list = new ArrayList<T>();
 		Connection conn = dataSource.getConnection();
 		
 		try {
