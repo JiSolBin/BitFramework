@@ -7,12 +7,17 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
-import com.bit.model.Emp02Dao;
+import com.bit.model.EmpDao;
 
 public class EmpDeleteController implements Controller {
 
 	Logger log = Logger.getLogger(getClass());
-	Emp02Dao dao = new Emp02Dao();
+	
+	EmpDao dao;
+	
+	public void setDao(EmpDao dao) {
+		this.dao = dao;
+	}
 	
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -4,25 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
-import com.mysql.cj.jdbc.MysqlDataSource;
-
 public class Emp03Dao extends JdbcDaoSupport implements EmpDao{
-	
-	private DataSource dataSource;
-	
-	public Emp03Dao() {
-		MysqlDataSource dataSource = new MysqlDataSource();
-		dataSource.setUrl("jdbc:mysql://localhost:3306/scott");
-		dataSource.setUser("user01");
-		dataSource.setPassword("1234");
-		super.setDataSource(dataSource);
-	}
 
 	@Override
 	public List<EmpVo> selectAll() throws SQLException{
