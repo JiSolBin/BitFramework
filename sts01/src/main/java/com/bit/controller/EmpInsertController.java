@@ -7,11 +7,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 import com.bit.model.Emp03Dao;
+import com.bit.model.EmpDao;
 import com.bit.model.EmpVo;
 
 public class EmpInsertController implements Controller{
 	
-	Emp03Dao dao = new Emp03Dao();
+	EmpDao dao = new Emp03Dao();
 	
 	@Override
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
