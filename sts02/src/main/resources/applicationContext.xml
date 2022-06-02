@@ -126,9 +126,15 @@
 		<constructor-arg ref="dataSource"></constructor-arg>
 	</bean>
 	
+	<!-- 트랜잭션 매니저 주입 (dao4) -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<constructor-arg ref="dataSource"></constructor-arg>
+	</bean>
+	
 	<!-- 데이터 소스를 바로 주입한다면? 잘 돌아감 -->
 	<!-- Dao support는 dataSource를 제공하면 알아서 jdbcTemplate를 만듦 -->
-	<bean id="empDao" class="com.bit.emp.model.EmpDaoImpl3">
+	<bean id="empDao" class="com.bit.emp.model.EmpDaoImpl4">
       <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
+      <constructor-arg ref="transactionManager"></constructor-arg>
 	</bean>
 </beans>
