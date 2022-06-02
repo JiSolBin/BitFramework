@@ -11,6 +11,20 @@
 		<welcome-file>index.bit</welcome-file>
 	</welcome-file-list>
 	
+	<!-- listener : context 로딩 시점에 작동됨 -->
+	<!-- 컨트롤러 만들어지는 시점보다 앞선 시점에 Dao 객체 만들 수 잇다 : 컨트롤러에서 dao 받아서 사용 가능 -->
+	
+	<!-- init param 못 넘기는 대신 context-param으로 넘김 -->
+	<!-- webapp이 루트인데 난 이 파일을 resources에 가지고 있음 -> classpath root 붙임  -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/applicationContext.xml</param-value>
+	</context-param>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
 	<servlet>
 		<servlet-name>sts02</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

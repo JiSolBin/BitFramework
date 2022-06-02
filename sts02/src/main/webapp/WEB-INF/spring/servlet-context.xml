@@ -6,11 +6,13 @@
 <!-- handler mapping -->
 <bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 	<property name="urlMap">
-		<!-- index == bean id -->
 		<props>
+			<!-- <prop>beanId</prop> -->
 			<prop key="/index.bit">index</prop>
 			<prop key="/intro.bit">intro</prop>
 			<prop key="/emp/list.bit">list</prop>
+			<prop key="/emp/add.bit">add</prop>
+			<prop key="/emp/insert.bit">insert</prop>
 		</props>
 		<!-- /index.bit에 대한 value로 bean -->
 		<!-- <map>
@@ -25,7 +27,17 @@
 <bean id="intro" class="com.bit.controller.IndexController">
 	<property name="viewName" value="intro"></property>
 </bean>
-<bean id="list" class="com.bit.emp.controller.ListController"></bean>
+<bean id="list" class="com.bit.emp.controller.ListController">
+	<!-- applicationContext.xml 그거 받아 쓰는거 -->
+	<property name="empDao" ref="empDao"></property>
+</bean>
+<!-- 컨트롤러 재사용  -->
+<bean id="add" class="com.bit.controller.IndexController">
+	<property name="viewName" value="add"></property>
+</bean>
+<bean id="insert" class="com.bit.emp.controller.InsertController">
+	<property name="empDao" ref="empDao"></property>
+</bean>
 
 <!-- viewResolver -->
 <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

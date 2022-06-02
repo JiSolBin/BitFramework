@@ -15,6 +15,7 @@
   <li class="active">EMP</li>
 </ol>
 <h3 class="page-header">EMP List</h3>
+<a href="add.bit" class="btn btn-primary btn-block" role="button">입력</a>
 <table class="table">
 	<thead>
 		<tr>
@@ -23,6 +24,16 @@
 			<th>hiredate</th>
 		</tr>
 	</thead>
+	<tbody>
+	<%@ page import="java.util.List, com.bit.emp.model.EmpVo" %>
+	<%for(EmpVo bean:(List<EmpVo>)request.getAttribute("list")){ %>
+		<tr>
+			<td><a href="detail.bit?empno=<%=bean.getEmpno() %>"><%=bean.getEmpno() %></a></td>
+			<td><a href="detail.bit?empno=<%=bean.getEmpno() %>"><%=bean.getEname() %></a></td>
+			<td><a href="detail.bit?empno=<%=bean.getEmpno() %>"><%=bean.getHiredate() %></a></td>
+		</tr>
+	<%} %>
+	</tbody>
 </table>
 
 <%@ include file="template/footer.jspf" %>
