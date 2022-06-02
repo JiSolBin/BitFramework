@@ -108,8 +108,22 @@
 		<property name="username" value="user01"></property>
 		<property name="password" value="1234"></property>
 	</bean>
-	<bean id="empDao" class="com.bit.emp.model.EmpDaoImpl1">
-		<!-- setter를 통해 주입 할거라서 -->
+	<!-- setter를 통해 주입 -->
+	<!-- <bean id="empDao" class="com.bit.emp.model.EmpDaoImpl1">
 		<property name="dataSource" ref="dataSource"></property>
+	</bean> -->
+	
+	<!-- 생성자를 통해 주입 -->
+	<!-- <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="empDao" class="com.bit.emp.model.EmpDaoImpl2">
+		<constructor-arg name="jdbcTemplate" ref="jdbcTemplate"></constructor-arg>
+	</bean> -->
+	
+	<!-- 데이터 소스를 바로 주입한다면? 잘 돌아감 -->
+	<!-- Dao support는 dataSource를 제공하면 알아서 jdbcTemplate를 만듦 -->
+	<bean id="empDao" class="com.bit.emp.model.EmpDaoImpl2">
+      <constructor-arg name="dataSource" ref="dataSource"/>
 	</bean>
 </beans>
