@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 프로퍼티를 통해 setter 호출 + Date 클래스 생성자 사용 -->
+	<!-- <bean id="bean" class="com.bit.emp.model.EmpVo">
+		<property name="empno" value="1111"></property>
+		<property name="ename" value="test"></property>
+		<property name="hiredate">
+			<bean class="java.sql.Date">
+				<constructor-arg value="1654129578690"></constructor-arg>
+			</bean>
+		</property>
+	</bean> -->
+	
+	<!-- 생성자 사용1 -->
+	<!-- <bean id="bean" class="com.bit.emp.model.EmpVo">
+		<constructor-arg value="2222"></constructor-arg>
+		<constructor-arg value="user02"></constructor-arg>
+	</bean> -->
+	
+	<!-- 생성자 사용2 -->
+	<!-- 위 처럼 내부에서 빈 생성하면 밖에서 접근 안됨 -> 밖에서 만들고 ref로 불러와서 씀 -->
+	<!-- <bean id="now" class="java.sql.Date">
+		<constructor-arg value="1654129578690"></constructor-arg>
+	</bean>
+	<bean id="bean" class="com.bit.emp.model.EmpVo">
+		<constructor-arg value="3333"></constructor-arg>
+		<constructor-arg value="1000"></constructor-arg>
+		<constructor-arg value="user03"></constructor-arg>
+		<constructor-arg value="tester"></constructor-arg>
+		<constructor-arg ref="now"></constructor-arg>
+	</bean> -->
+	
+	<!-- arrayList 사용 -->
+	<!-- <bean id="obj1" class="java.util.Date"></bean>
+	<bean id="bean" class="com.bit.emp.model.EmpVo">
+		<property name="arr1">
+			<list>
+				<value>1111</value>
+				<value>문자열</value>
+				<ref bean="obj1"></ref>
+			</list>
+		</property>
+	</bean> -->
+	
+	<!-- hashSet, Set -->
+	<!-- <bean id="bean" class="com.bit.emp.model.EmpVo">
+		<property name="arr2">
+			<set>
+				<value>첫번째</value>
+				<value>중복</value>
+				<value>중복</value>
+				<value>두번째</value>
+			</set>
+		</property>
+	</bean> -->
+	
+	<!-- Map, Properties -->
+	<!-- <bean id="bean" class="com.bit.emp.model.EmpVo">
+		<property name="arr3">
+			<map>
+				<entry key="key1">
+					<value>value1</value>
+				</entry>
+				<entry key="key2" value="val2"></entry>
+				<entry key="key3">
+					<bean class="java.util.Date"></bean>
+				</entry>
+			</map>
+		</property>
+	</bean> -->
+	
+	<!-- Properties -->
+	<!-- <bean id="bean" class="com.bit.emp.model.EmpVo">
+		<property name="arr4">
+			<props>
+				<prop key="key1">val1</prop>
+				<prop key="key2">val2</prop>
+				<prop key="key3">val3</prop>
+				<prop key="key4">val4</prop>
+			</props>
+		</property>
+	</bean> -->
+	
+	<!-- String[] <array>, <list> 둘 다 사용 가능 -->
+	<!-- <bean id="bean" class="com.bit.emp.model.EmpVo">
+		<property name="arr5">
+			<array>
+				<value>첫</value>
+				<value>둘</value>
+				<value>셋</value>
+			</array>
+		</property>
+	</bean> -->
+	
+	<bean id="bean" class="com.bit.emp.model.EmpVo">
+		<constructor-arg value="test" index="1"></constructor-arg>
+		<constructor-arg value="1111" index="0"></constructor-arg>
+	</bean>
+</beans>
