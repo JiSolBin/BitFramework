@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- handler mapping -->
+<bean id="handlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	<property name="urlMap">
+		<!-- index == bean id -->
+		<props>
+			<prop key="/index.bit">index</prop>
+			<prop key="/intro.bit">intro</prop>
+			<prop key="/emp/list.bit">list</prop>
+		</props>
+		<!-- /index.bit에 대한 value로 bean -->
+		<!-- <map>
+			<entry key="/index.bit" value-ref="index"></entry>
+		</map> -->
+	</property>
+</bean>
+<!-- 이걸 value로 바로 넣어버리면 bean 재사용성 떨어짐 -->
+<bean id="index" class="com.bit.controller.IndexController">
+	<property name="viewName" value="index"></property>
+</bean>
+<bean id="intro" class="com.bit.controller.IndexController">
+	<property name="viewName" value="intro"></property>
+</bean>
+<bean id="list" class="com.bit.emp.controller.ListController"></bean>
+
+<!-- viewResolver -->
+<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<property name="prefix" value="/WEB-INF/views/"/>
+	<property name="suffix" value=".jsp"/>
+</bean>
+</beans>
