@@ -95,8 +95,21 @@
 		</property>
 	</bean> -->
 	
-	<bean id="bean" class="com.bit.emp.model.EmpVo">
+	<!-- <bean id="bean" class="com.bit.emp.model.EmpVo">
 		<constructor-arg value="test" index="1"></constructor-arg>
 		<constructor-arg value="1111" index="0"></constructor-arg>
+	</bean> -->
+	
+	<!-- <bean id="dataSource" class="com.mysql.cj.jdbc.MysqlDataSource"> -->
+	<!-- db 상관 없이 범용적으로 사용하기 위해 spring jdbc 사용 (user->username, driverClassName 추가) -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.MysqlDataSource"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/scott"></property>
+		<property name="username" value="user01"></property>
+		<property name="password" value="1234"></property>
+	</bean>
+	<bean id="empDao" class="com.bit.emp.model.EmpDaoImpl1">
+		<!-- setter를 통해 주입 할거라서 -->
+		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 </beans>
