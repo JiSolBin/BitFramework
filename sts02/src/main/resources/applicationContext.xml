@@ -121,9 +121,14 @@
 		<constructor-arg name="jdbcTemplate" ref="jdbcTemplate"></constructor-arg>
 	</bean> -->
 	
+	<!-- EmpDaoImpl3는 JdbcTemplate 상속 X, 직접 만들어서 넘겨줌 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<constructor-arg ref="dataSource"></constructor-arg>
+	</bean>
+	
 	<!-- 데이터 소스를 바로 주입한다면? 잘 돌아감 -->
 	<!-- Dao support는 dataSource를 제공하면 알아서 jdbcTemplate를 만듦 -->
-	<bean id="empDao" class="com.bit.emp.model.EmpDaoImpl2">
-      <constructor-arg name="dataSource" ref="dataSource"/>
+	<bean id="empDao" class="com.bit.emp.model.EmpDaoImpl3">
+      <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
 	</bean>
 </beans>
