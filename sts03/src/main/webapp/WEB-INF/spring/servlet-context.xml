@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Autowired -->
+	<bean id="beanFactoryAware" class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
+
+	<bean id="handlerMapping" 
+		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>
+	<bean name="/" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+		<property name="viewName" value="home"></property>
+	</bean>
+	<bean name="/list" class="com.bit.frame.controller.ListController"></bean>
+	<bean name="/add" class="com.bit.frame.controller.AddController"></bean>
+	<bean name="/insert" class="com.bit.frame.controller.InsertController">
+		<property name="commandClass" value="com.bit.frame.model.EmpVo"></property>
+		<property name="commandName" value="bean"></property>
+		<property name="supportedMethods" value="POST"></property>
+	</bean>
+	
+	<bean id="viewResolver" 
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+</beans>
