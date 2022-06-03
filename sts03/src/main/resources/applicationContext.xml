@@ -8,6 +8,8 @@
 		<property name="msg" value="hello~"></property>
 	</bean>
 	
+	<bean id="service2" class="com.bit.frame.service.testClass"></bean>
+	
 	<!-- AOP 빈 등록 -->
 	<bean id="returnAdvice" class="com.bit.frame.aop.AfterMethod"></bean>
 	<bean id="beforeAdvice" class="com.bit.frame.aop.BeforeMethod"></bean>
@@ -34,6 +36,7 @@
 			</array>
 		</property>
 	</bean>
+	
 	<bean id="advisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
 		<property name="pointcut" ref="pointcut2"></property>
 		<property name="advice" ref="aroundAdvice"></property>

@@ -4,6 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.bit.frame.service.UserService;
+import com.bit.frame.service.testClass;
 
 public class App {
 	
@@ -12,13 +13,16 @@ public class App {
 		context = new ClassPathXmlApplicationContext("/applicationContext.xml");
 		
 		// (서비스 빈 + aop 빈 = proxy) 를 get
-		UserService service = (UserService) context.getBean("service");
+		// UserService service = (UserService) context.getBean("service");
 		
-		service.setMsg("수정");
-		service.printMsg();
+		//service.setMsg("수정");
+		//service.printMsg();
 		// exception 일 땐 afterMethod 작동X -> ThrowsAdvice
 		// service.setSu(3);
-		service.printSu();
+		//service.printSu();
+		
+		testClass tc = (testClass) context.getBean("service2");
+		tc.printVal();
 	}
 
 }
