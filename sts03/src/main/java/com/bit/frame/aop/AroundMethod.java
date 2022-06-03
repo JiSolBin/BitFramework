@@ -15,10 +15,10 @@ public class AroundMethod implements MethodInterceptor {
 		// return 으로 다음꺼 엮기 (return invocation.proceed())
 		// before일 때만 실행 됨 -> try finally로 묶으면 after도 출력
 //		try {
-//			System.out.println("aroud before...");
+//			System.out.println("around before...");
 //			return invocation.proceed();
 //		} finally {
-//			System.out.println("aroud after...");
+//			System.out.println("around after...");
 //		}
 		
 		// return 하지 않고 object로 받아서 마지막에 return 해줄 수도 있음
@@ -31,7 +31,7 @@ public class AroundMethod implements MethodInterceptor {
 		log.debug("around before...");
 		Object obj = null;
 		try {
-			invocation.proceed();
+			obj = invocation.proceed();
 			log.debug("around after...");
 		} catch (Exception e) {
 		}
