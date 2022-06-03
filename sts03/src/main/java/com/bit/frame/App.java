@@ -12,8 +12,9 @@ public class App {
 		context = new ClassPathXmlApplicationContext("/applicationContext.xml");
 		
 		// (서비스 빈 + aop 빈 = proxy) 를 get
-		UserService service = (UserService) context.getBean("proxy");
+		UserService service = (UserService) context.getBean("service");
 		
+		service.setMsg("수정");
 		service.printMsg();
 		// exception 일 땐 afterMethod 작동X -> ThrowsAdvice
 		// service.setSu(3);
