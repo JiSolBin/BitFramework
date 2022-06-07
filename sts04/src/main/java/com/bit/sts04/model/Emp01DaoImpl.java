@@ -42,7 +42,8 @@ public class Emp01DaoImpl implements EmpDao<EmpVo> {
 	@Override
 	public void insertOne(EmpVo obj) throws SQLException {
 		
-
+		String sql = "insert into emp (ename, sal, job, empno, hiredate) values (?,?,?,?,now())";
+		jdbcTemplate.update(sql, obj.getEname(), obj.getSal(), obj.getJob(), obj.getEmpno());
 	}
 
 	@Override
