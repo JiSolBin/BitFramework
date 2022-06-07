@@ -32,9 +32,9 @@
 	<tbody>
 		<c:forEach items="${list }" var="bean">
 			<tr>
-				<td><a href="#">${bean.empno }</a></td>
-				<td><a href="#">${bean.ename }</a></td>
-				<td><a href="#"><fmt:formatDate value="${bean.hiredate }" pattern="yy/MM/dd"/></a></td>
+				<td><a href="detail?idx=${bean.empno }">${bean.empno }</a></td>
+				<td><a href="detail?idx=${bean.empno }">${bean.ename }</a></td>
+				<td><a href="detail?idx=${bean.empno }"><fmt:formatDate value="${bean.hiredate }" pattern="yy/MM/dd"/></a></td>
 			</tr>
 		</c:forEach>
 	</tbody>
