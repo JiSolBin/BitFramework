@@ -9,5 +9,6 @@
 <body>
 	<h1>ex01 page</h1>
 	<p>${msg }</p>
+	<img src="resources/imgs/logo.jpg">
 </body>
 </html>
