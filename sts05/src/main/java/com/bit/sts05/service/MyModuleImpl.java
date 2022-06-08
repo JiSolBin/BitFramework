@@ -4,18 +4,25 @@ public class MyModuleImpl implements MyModule {
 
 	@Override
 	public void func01() {
-		System.out.println("Ã¹ ¹øÂ° ±â´É ½ÇÇà...");
+		System.out.println("ì²« ë²ˆì§¸ ê¸°ëŠ¥ ì‹¤í–‰...");
 	}
 	
 	@Override
 	public void func02(int su) {
-		System.out.println(su+"¸¦ Àü´Ş ¹ŞÀº µÎ ¹øÂ° ±â´É...");
+		System.out.println(su+"ë¥¼ ì „ë‹¬ ë°›ì€ ë‘ ë²ˆì§¸ ê¸°ëŠ¥ ì‹¤í–‰...");
 	}
 	
 	@Override
 	public String func03() {
-		String msg="¼¼ ¹øÂ°";
-		System.out.println(msg+"¶ó´Â ¹®ÀÚ¿­À» ¸®ÅÏÇÏ´Â ¼¼ ¹øÂ° ±â´É...");
+		String msg="ì„¸ ë²ˆì§¸";
+		System.out.println(msg+"ë¼ëŠ” ë¬¸ìì—´ì„ ì „ë‹¬ ë°›ì€ ì„¸ ë²ˆì§¸ ê¸°ëŠ¥ ì‹¤í–‰...");
 		return msg;
+	}
+	
+	@Override
+	public void func04() {
+		// ArrayIndexOutOfBoundsException
+		Object[] obj = {};
+		obj[1] = 1111;
 	}
 }

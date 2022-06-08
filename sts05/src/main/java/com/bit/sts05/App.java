@@ -14,8 +14,9 @@ public class App {
 		
 		MyModule module = ac.getBean(MyModule.class);
 		
-		module.func01();
-		module.func02(1234);
-		System.out.println(module.func03());
+		//module.func01();
+		//module.func02(1234);
+		//System.out.println(module.func03());
+		module.func04();
 	}
 }

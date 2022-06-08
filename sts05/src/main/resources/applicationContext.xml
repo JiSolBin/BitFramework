@@ -9,14 +9,33 @@
 
 	<bean id="userBefore"  class="com.bit.sts05.utils.UserBefore"></bean>
 	<bean id="userAfter"  class="com.bit.sts05.utils.UserAfter"></bean>
+	<bean id="userAround" class="com.bit.sts05.utils.UserAround"></bean>
 	<aop:config>
-		<aop:pointcut expression="execution(* com.bit.sts05.service.MyModule.func*(..))" id="moduleBefore"/>
+		<aop:pointcut expression="execution(* com.bit.sts05.service.MyModule.func*(..))" id="modulePointCut"/>
 		<!-- advice를 ref로 불러옴 -->
-		<aop:aspect ref="userBefore">
-			<aop:before method="beforeTargetMethod" pointcut-ref="moduleBefore"/>
+		<!-- <aop:aspect ref="userBefore">
+			<aop:before method="beforeTargetMethod" pointcut-ref="modulePointCut"/>
 		</aop:aspect>
 		<aop:aspect ref="userAfter">
-			<aop:after method="afterTargetMethod" pointcut-ref="moduleBefore"/>
+			<aop:after method="afterTargetMethod" pointcut-ref="modulePointCut"/>
+		</aop:aspect> -->
+		
+		<!-- <aop:aspect ref="userAfter">
+			<aop:after-returning
+				method="afterReturningTargetMethod" 
+				pointcut-ref="modulePointCut"
+				returning="retVal"/>
+		</aop:aspect> -->
+		<!-- <aop:aspect ref="userAfter">
+			<aop:after-throwing
+				method="afterThrowingTargetMethod" 
+				pointcut-ref="modulePointCut"
+				throwing="exception"/>
+		</aop:aspect> -->
+		<aop:aspect ref="userAround">
+			<aop:around
+				method="aroundTargetMethod" 
+				pointcut-ref="modulePointCut"/>
 		</aop:aspect>
 	</aop:config>
 	

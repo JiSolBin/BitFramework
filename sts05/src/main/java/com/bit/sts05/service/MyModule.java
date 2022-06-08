@@ -7,5 +7,7 @@ public interface MyModule {
 	void func02(int su);
 
 	String func03();
+	
+	void func04();
 
 }
