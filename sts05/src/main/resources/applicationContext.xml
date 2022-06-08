@@ -3,45 +3,36 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
-	<bean id="myModule" class="com.bit.sts05.service.MyModuleImpl"></bean>
-
-	<!-- 어노테이션을 통해 빈 객체를 생성 할 수 있음 -->
-	<!-- <bean id="userBefore"  class="com.bit.sts05.utils.UserBefore"></bean> -->
-	<bean id="userAfter"  class="com.bit.sts05.utils.UserAfter"></bean>
-	<bean id="userAround" class="com.bit.sts05.utils.UserAround"></bean>
+	<!-- BasicDataSource 사용 : 종속성 탈피 -->
+	<!-- 커넥션 1개, 최대 5개 까지 늘릴 수 있음, 이후 3개로 줄임 -->
+	<bean id="dataSource" 
+		class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="com.mysql.cj.jdbc.Driver"
+		p:url="jdbc:mysql://localhost:3306/scott"
+		p:username="user01" p:password="1234"
+		p:maxActive="3" p:maxIdle="5" p:minIdle="1"
+		p:maxWait="3000">
+	</bean>
 	
-	<!-- <aop:config>
-		<aop:pointcut expression="execution(* com.bit.sts05.service.MyModule.func*(..))" id="modulePointCut"/>
-		<aop:aspect ref="userBefore">
-			<aop:before method="beforeTargetMethod" pointcut-ref="modulePointCut"/>
-		</aop:aspect>
-		
-		<aop:aspect ref="userAfter">
-			<aop:after method="afterTargetMethod" pointcut-ref="modulePointCut"/>
-			<aop:after-returning
-				method="afterReturningTargetMethod" 
-				pointcut-ref="modulePointCut"
-				returning="retVal"/>
-			<aop:after-throwing
-				method="afterThrowingTargetMethod" 
-				pointcut-ref="modulePointCut"
-				throwing="exception"/>
-		</aop:aspect>
-		
-		<aop:aspect ref="userAround">
-			<aop:around
-				method="aroundTargetMethod" 
-				pointcut-ref="modulePointCut"/>
-		</aop:aspect>
-	</aop:config> -->
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate"
+		p:dataSource-ref="dataSource">
+	</bean>
 	
-	<!-- 컴포넌트 스캔 -> 빈 객체 생성 따로 X -->
-	<context:component-scan base-package="com.bit.sts05.utils"/>
-	
-	<!-- 프록시 설정 (이전에 bean으로 했던 것) -->
+	<bean id="autoLogging" class="com.bit.sts05.utils.AutoLogging"></bean>
+	<aop:config>
+		<aop:pointcut expression="execution(* com.bit.sts05.model.EmpDao.*(..))" id="beforelog"/>
+		<aop:aspect ref="autoLogging">
+			<aop:before method="beforeAop" pointcut-ref="beforelog"/>
+		</aop:aspect>
+	</aop:config>
+	<!-- 이걸로 Dao 객체 만들고 -->
+	<context:component-scan base-package="com.bit.sts05.model" />
+	<!-- 이걸로 proxy 객체 만듦 -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>
