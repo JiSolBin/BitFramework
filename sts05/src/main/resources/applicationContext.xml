@@ -4,9 +4,11 @@
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 
 	<!-- BasicDataSource 사용 : 종속성 탈피 -->
 	<!-- 커넥션 1개, 최대 5개 까지 늘릴 수 있음, 이후 3개로 줄임 -->
@@ -33,6 +35,27 @@
 	</aop:config>
 	<!-- 이걸로 Dao 객체 만들고 -->
 	<context:component-scan base-package="com.bit.sts05.model" />
+	
+	<!-- 트랜잭션 -->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSource"/>
+	</bean>
+	  
+	<!-- <tx:advice id="txAdvice" transaction-manager="txManager">
+	   <tx:attributes>
+	      <tx:method name="*" rollback-for="Exception"/>
+	   </tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+	   <aop:pointcut id="requiredTx"
+	      expression="execution(* com.bit.sts05.service.EmpService.*(..))"/>
+	   <aop:advisor advice-ref="txAdvice"
+	      pointcut-ref="requiredTx" />
+	</aop:config> -->
+	<context:component-scan base-package="com.bit.sts05.service" />
+	<tx:annotation-driven transaction-manager="txManager"/>
+	
 	<!-- 이걸로 proxy 객체 만듦 -->
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>
