@@ -5,11 +5,14 @@ import java.util.Arrays;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-//@Aspect
+@Component
+@Aspect
 public class UserBefore {
 
-	//@Before(value = "execution(* com.bit.sts05.service.MyModule.*(..))")
+	@Before(value = "execution(* com.bit.sts05.service.MyModule.*(..))")
 	public void beforeTargetMethod(JoinPoint thisJoinPoint) {
 		
 		Class cls = thisJoinPoint.getSignature().getDeclaringType();
