@@ -6,10 +6,10 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
-@Aspect
+//@Aspect
 public class UserBefore {
 
-	@Before(value = "execution(* com.bit.sts05.service.MyModule.*(..))")
+	//@Before(value = "execution(* com.bit.sts05.service.MyModule.*(..))")
 	public void beforeTargetMethod(JoinPoint thisJoinPoint) {
 		
 		Class cls = thisJoinPoint.getSignature().getDeclaringType();

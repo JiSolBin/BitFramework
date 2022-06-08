@@ -4,10 +4,10 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
-@Aspect
+//@Aspect
 public class UserAround {
 
-	@Around("execution(* com.bit.sts05.service.MyModule.*(..))")
+	//@Around("execution(* com.bit.sts05.service.MyModule.*(..))")
 	public Object aroundTargetMethod(ProceedingJoinPoint thisJoinPoint)
             throws Throwable {
         System.out.println("around start.");
