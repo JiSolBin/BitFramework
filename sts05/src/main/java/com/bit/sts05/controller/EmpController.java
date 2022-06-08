@@ -11,30 +11,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.bit.sts05.model.EmpDao;
 import com.bit.sts05.model.EmpVo;
+import com.bit.sts05.service.EmpService;
 
 @Controller
 @RequestMapping("/emp")
 public class EmpController {
 
 	@Autowired
-	EmpDao<EmpVo> empDao;
+	EmpService empService;
 	
 	@RequestMapping("/")
 	public String list(Model model) throws SQLException {
 		
-		model.addAttribute("list", empDao.findAll());
+		empService.selectAll(model);
 		return "emp/list";
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
-	public void add() {
-		
-	}
+	public void add() {}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String insert(@ModelAttribute EmpVo bean) throws SQLException {
 		
-		empDao.insertOne(bean);
+		empService.insert(bean);
 		return "redirect:./";
 	}
 }
