@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
 	<bean id="myModule" class="com.bit.sts05.service.MyModuleImpl"></bean>
 
+	<bean id="userBefore"  class="com.bit.sts05.utils.UserBefore"></bean>
+	<bean id="userAfter"  class="com.bit.sts05.utils.UserAfter"></bean>
+	<aop:config>
+		<aop:pointcut expression="execution(* com.bit.sts05.service.MyModule.func*(..))" id="moduleBefore"/>
+		<!-- advice를 ref로 불러옴 -->
+		<aop:aspect ref="userBefore">
+			<aop:before method="beforeTargetMethod" pointcut-ref="moduleBefore"/>
+		</aop:aspect>
+		<aop:aspect ref="userAfter">
+			<aop:after method="afterTargetMethod" pointcut-ref="moduleBefore"/>
+		</aop:aspect>
+	</aop:config>
+	
+	<!-- 프록시 설정 (이전에 bean으로 했던 것) -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>
