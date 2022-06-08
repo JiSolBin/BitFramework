@@ -1,0 +1,16 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+
+	<div id="footer" class="row">
+	  <div class="col-sm-offset-2 col-md-10">
+		<address>
+		  <strong>비트교육센터</strong><br>
+		  1355 Market Street, Suite 900<br>
+		</address>
+		
+		<address>
+		  <strong>Copyright 어쩌구</strong><br>
+		</address>
+	  </div>
+	</div>
+</div>
