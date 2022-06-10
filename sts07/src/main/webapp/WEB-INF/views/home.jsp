@@ -22,6 +22,7 @@
     	<li><a href="#">HOME</a></li>
     	<li><a href="#emp">EMP</a></li>
     	<li><a href="#addemp">ADD EMP</a></li>
+    	<li><a href="dept/">DEPT</a></li>
     	<li><a href="#login">LOGIN</a></li>
     </ul>
   </div>
