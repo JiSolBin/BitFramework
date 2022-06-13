@@ -28,5 +28,11 @@
 	</context:component-scan>
 	
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/emp/*"/>
+			<beans:bean class="com.bit.sts08.utils.LoginInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>
