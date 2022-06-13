@@ -31,9 +31,19 @@
         <li class="nav-item">
           <a class="nav-link" href="./add">EMP_Add</a>
         </li>
-         <li class="nav-item">
-          <a class="nav-link" href="../login/">LOGIN</a>
-        </li>
+       <c:if test="${sessionScope.result eq null }">
+        	<li class="nav-item">
+	          <a class="nav-link" href="../login/">LOGIN</a>
+	        </li>
+        </c:if>
+        <c:if test="${sessionScope.result eq true }">
+        	<li class="nav-item">
+	          <a class="nav-link" href="../logout/">LOGOUT</a>
+	        </li>
+        </c:if>
+        <c:if test="${sessionScope.result}">
+        	<li class="nav-item">${sessionScope.user }</li>
+        </c:if>
       </ul>
     </div>
   </div>

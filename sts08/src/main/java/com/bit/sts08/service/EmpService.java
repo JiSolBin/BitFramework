@@ -15,4 +15,8 @@ public interface EmpService {
 	Emp update(Emp bean);
 
 	boolean delete(int empno);
+
+	boolean login(Emp bean);
+
+	void logout();
 }

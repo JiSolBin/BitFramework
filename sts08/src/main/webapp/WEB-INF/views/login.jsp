@@ -35,7 +35,7 @@
           <a class="nav-link" href="./">EMP</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="./add">EMP_Add</a>
+          <a class="nav-link" href="../emp/add">EMP_Add</a>
         </li>
        <c:if test="${sessionScope.result eq null }">
         	<li class="nav-item">
@@ -48,7 +48,7 @@
 	        </li>
         </c:if>
         <c:if test="${sessionScope.result}">
-        	<li class="nav-item">${sessionScope.user }</li>
+        	<li class="nav-item">${sessionScope.user }님 로그인 중...</li>
         </c:if>
       </ul>
     </div>
@@ -65,15 +65,7 @@
 	    <label for="ename" class="form-label">ename</label>
 	    <input type="text" class="form-control" id="ename" name="ename" value="${bean.ename }">
 	  </div>
-	  <div class="mb-3">
-	    <label for="sal" class="form-label">sal</label>
-	    <input type="text" class="form-control" id="sal" name="sal" value="${bean.sal }">
-	  </div>
-	  <div class="mb-3">
-	    <label for="job" class="form-label">job</label>
-	    <input type="text" class="form-control" id="job" name="job" value="${bean.job }">
-	  </div>
-	  <button type="submit" class="btn btn-primary">Submit</button>
+	  <button type="submit" class="btn btn-primary">Login</button>
 	  <button type="reset" class="btn btn-default">Reset</button>
 	  <button type="button" class="btn btn-default" onclick="history.back();">Back</button>
 	</form>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bit.sts08.domain.Emp;
 import com.bit.sts08.service.EmpService;
@@ -55,5 +56,27 @@ public class EmpController {
 		
 		empServiceImple.update(bean);
 		return "redirect:./"+empno;
+	}
+	
+	@GetMapping("/login/")
+	public String loginForm() {
+		
+		return "login";
+	}
+	
+	@PostMapping("/login/")
+	public String login(Emp bean) {
+		
+		if(empServiceImple.login(bean))
+			return "redirect:../";
+		else
+			return "login";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout() {
+		
+		empServiceImple.logout();
+		return "redirect:../"; 
 	}
 }
