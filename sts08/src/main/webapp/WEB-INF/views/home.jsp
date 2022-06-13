@@ -3,6 +3,9 @@
 <html>
 <head>
 	<title>Home</title>
+	<script>
+		location.replace('./emp/');
+	</script>
 </head>
 <body>
 <h1>
