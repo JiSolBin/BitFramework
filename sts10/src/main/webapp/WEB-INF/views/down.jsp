@@ -9,7 +9,7 @@
 <body>
 
 <h1>download page</h1>
-<div><a href="down?file=${filename}">[${origin }]</a></div>
+<div><a href="down?file=${filename}&origin=${origin}">[${origin }]</a></div>
 
 </body>
 </html>

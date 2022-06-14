@@ -2,6 +2,7 @@ package com.bit.sts10;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,10 +49,13 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/down", method = RequestMethod.GET)
-	public void down1(HttpServletResponse res, @RequestParam("file") String filename) throws IOException {
+	public void down1(HttpServletResponse res, @RequestParam("file") String filename, @RequestParam("origin") String origin) {
 		
 		File file = new File(uploadPath+filename);
 		
+		// 파일을 다운로드 받을 수 있도록 함
+		res.setContentType("application/octet-stream");
+		res.setHeader("Content-Disposition", "attachment; filename=\""+origin+"\""); // 원래 파일명으로 다운로드
 		try (
 			OutputStream os = res.getOutputStream();
 			InputStream is = new FileInputStream(file);
