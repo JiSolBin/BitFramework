@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -16,6 +17,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.mysql.cj.jdbc.Driver;
 
 @Configuration
+@MapperScan("com.bit.sts11.model")
 public class RootConfig {
 
 	@Bean
@@ -30,6 +32,14 @@ public class RootConfig {
 		return dataSource;
 	}
 	
+	@Bean
+	public SqlSessionFactory sqlSessionFactory() throws Exception {
+		
+		SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
+		factory.setDataSource(getDataSource());
+		return factory.getObject();
+	}
+	
 //	@Bean
 //	public JdbcTemplate getJdbcTemplate() {
 //		
@@ -39,21 +49,21 @@ public class RootConfig {
 //		return jdbcTemplate;
 //	}
 	
-	@Bean
-	public SqlSessionFactory getSqlSessionFactory() throws Exception {
-		
-		SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
-		factory.setDataSource(getDataSource());
-		Resource[] resource = new Resource[1];
-		resource[0] = new ClassPathResource("/mapper/deptMapper.xml");
-		factory.setMapperLocations(resource);
-		
-		return factory.getObject();
-	}
-	
-	@Bean
-	public SqlSession getSqlSession(SqlSessionFactory sqlSessionFactory) {
-		
-		return new SqlSessionTemplate(sqlSessionFactory);
-	}
+//	@Bean
+//	public SqlSessionFactory getSqlSessionFactory() throws Exception {
+//		
+//		SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
+//		factory.setDataSource(getDataSource());
+//		Resource[] resource = new Resource[1];
+//		resource[0] = new ClassPathResource("/mapper/deptMapper.xml");
+//		factory.setMapperLocations(resource);
+//		
+//		return factory.getObject();
+//	}
+//	
+//	@Bean
+//	public SqlSession getSqlSession(SqlSessionFactory sqlSessionFactory) {
+//		
+//		return new SqlSessionTemplate(sqlSessionFactory);
+//	}
 }
