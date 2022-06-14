@@ -48,23 +48,43 @@ public class HomeController {
 		return "down";
 	}
 	
-	@RequestMapping(value = "/down", method = RequestMethod.GET)
-	public void down1(HttpServletResponse res, @RequestParam("file") String filename, @RequestParam("origin") String origin) {
+//	@RequestMapping(value = "/down", method = RequestMethod.GET)
+//	public void down1(HttpServletResponse res, @RequestParam("file") String filename, @RequestParam("origin") String origin) {
+//		
+//		File file = new File(uploadPath+filename);
+//		
+//		// 파일을 다운로드 받을 수 있도록 함
+//		res.setContentType("application/octet-stream");
+//		res.setHeader("Content-Disposition", "attachment; filename=\""+origin+"\""); // 원래 파일명으로 다운로드
+//		try (
+//			OutputStream os = res.getOutputStream();
+//			InputStream is = new FileInputStream(file);
+//		){
+//			while(true) {
+//				int su = is.read();
+//				if(su==-1) break;
+//				os.write(su);
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
+	@RequestMapping(value = "/down/{filename:.+}", method = RequestMethod.GET)
+	public void down2(HttpServletResponse res, @PathVariable String filename) {
 		
-		File file = new File(uploadPath+filename);
-		
-		// 파일을 다운로드 받을 수 있도록 함
 		res.setContentType("application/octet-stream");
-		res.setHeader("Content-Disposition", "attachment; filename=\""+origin+"\""); // 원래 파일명으로 다운로드
-		try (
-			OutputStream os = res.getOutputStream();
-			InputStream is = new FileInputStream(file);
-		){
-			while(true) {
-				int su = is.read();
-				if(su==-1) break;
+		res.setHeader("Content-Disposition", "attachment; filename=\""+filename.substring(filename.indexOf('_')+1)+"\"");
+		try(
+				InputStream is = new FileInputStream(uploadPath+filename);
+				OutputStream os = res.getOutputStream();
+				){
+			int su=1;
+			while((su=is.read())!=-1) {
 				os.write(su);
 			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
