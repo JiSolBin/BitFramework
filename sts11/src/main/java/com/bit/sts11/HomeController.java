@@ -2,6 +2,7 @@ package com.bit.sts11;
 
 import java.sql.SQLException;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +16,13 @@ import com.bit.sts11.model.DeptDao;
 public class HomeController {
 	
 	@Autowired
-	DeptDao deptDao;
+	SqlSession sqlSession;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	//@ResponseBody
 	public String home(Model model) throws SQLException {
 		
-		model.addAttribute("list", deptDao.findAll());		
+		model.addAttribute("list", sqlSession.getMapper(DeptDao.class).findAll());		
 		return "home";
 	}
 	
