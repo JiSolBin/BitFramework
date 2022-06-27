@@ -9,12 +9,21 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	@Autowired
+	UserDetailsService userDetailsService;
+	
+	@Bean
+	BCryptPasswordEncoder getPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
@@ -25,16 +34,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// http.authorizeHttpRequests().antMatchers("/hello").authenticated();
 		// http.authorizeHttpRequests().antMatchers("/api/emp/**").authenticated();
 		// 위 세 개 제외 어디든 접근하려면 인증
-		// http.authorizeHttpRequests().anyRequest().authenticated();
+		http.authorizeHttpRequests().anyRequest().authenticated();
 		// 위 세 개 제외 어디든 접근하려면 "ADMIN" 권한 이어야 함
 		// http.authorizeHttpRequests().anyRequest().hasRole("ADMIN");
+		// 위 세 개 제외 어디든 접근하려면 "ADMIN", "USER" 권한 이어야 함
+		// http.authorizeHttpRequests().anyRequest().hasAnyRole("ADMIN", "USER");
 		
-		http.authorizeHttpRequests().anyRequest().hasAnyRole("ADMIN", "USER");
 		http.formLogin().loginPage("/login");
+		http.userDetailsService(userDetailsService);
 	}
 
-	@Autowired
-	DataSource dataSource;
+//	@Autowired
+//	DataSource dataSource;
 
 //	@Override
 //	public void configure(AuthenticationManagerBuilder builder) throws Exception {
@@ -44,18 +55,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //			.withUser("admin").password(getPasswordEncoder().encode("1234")).roles("ADMIN");
 //	}
 	
-	@Bean
-	BCryptPasswordEncoder getPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-	
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.jdbcAuthentication()
-			.dataSource(dataSource)
-			.usersByUsernameQuery("select username, password, enabled from users where username=?")
-			.authoritiesByUsernameQuery("select username, authority from authorities where username=?")
-		;
-	}
+//	@Autowired
+//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//		auth
+//			.jdbcAuthentication()
+//			.dataSource(dataSource)
+//			.usersByUsernameQuery("select username, password, enabled from users where username=?")
+//			.authoritiesByUsernameQuery("select username, authority from authorities where username=?")
+//		;
+//	}
 }

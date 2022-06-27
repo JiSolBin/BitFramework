@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,9 +25,10 @@ public class MainController {
 	}
 	
 	@RequestMapping("/")
-	public String page2() throws SQLException {
-		log.debug(dataSource.toString());
-		log.debug(dataSource.getConnection().toString());
+	public String page2(@AuthenticationPrincipal User user) throws SQLException {
+		System.out.println(user);
+		if(user!=null)
+			System.out.println(user.getUsername());
 		return "home";
 	}
 	
